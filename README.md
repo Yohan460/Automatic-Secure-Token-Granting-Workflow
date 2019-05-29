@@ -35,10 +35,17 @@ For the script enter the contents of the [SecureTokenStatusEA.sh](https://github
 3. The FV2 authentiation sceen presents all users that have a SecureToken no matter if they are hidden or not, therefore it is extremely important to try and minimize the number accounts presented to the user at this screen to avoid confusion.
 
 ### Implementation
-This implementation will take two
+This implementation will take three stages. First, setting up the smart group for the policy. Second, adding the script to JAMF and explaining the script agruments. Third, the actual policy to run our script. Everything followed by some general comments about the script and explanations on why things are done the way they are.
 
-#### Smart Group Scoping
+#### Smart Group Scoping Setup
 
+⋅⋅*Name: 
+
+#### Script Setup
+
+#### Policy Setup
+
+#### General Notes
 
 ## Step 4 - Giving the user a SecureToken
 Step 2 is enabling you user to get a token at login. This can be done utilizing the script titled `enableUserUsingAdminForFV2.sh`, It takes in your admin username and password as Jamf script parameters and uses those to enable the account with a token. That being said we don’t want just any user to get a token, we want the assigned user to have a token. Therefore in the policy we set the following things:

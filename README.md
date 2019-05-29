@@ -17,6 +17,14 @@ Custom Settings
 ```
 ## Step 2 (Optional) - DEP Enrollment with no account creation SecureToken management
 
+#### DEP SecureToken management Reasoning
+1. When the user account creation is skipped during a pre-stage enrollment there are situations where the management account can be granted the first SecureToken. Once this secure token is granted it must be used to grant other tokens. 
+2. There are other situations after a DEP enrollment or large major OS upgrade that can leave the machine with no SecureTokens. Therefore making grabbing theb first one for a known administrator account even more important
+3. The FV2 authentiation sceen presents all users that have a SecureToken no matter if they are hidden or not, therefore it is extremely important to try and minimize the number accounts presented to the user at this screen to avoid confusion.
+
+#### Implementation
+
+
 ## Step 3 - Reporting on general SecureToken Status
 
 ## Step 4 - Giving the user a SecureToken

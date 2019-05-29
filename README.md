@@ -25,7 +25,7 @@ Data Type: String
 Input Type: Script
 Script: See below
 ```
-For the script enter the contents of the SecureTokenStatusEA.sh
+For the script enter the contents of the [SecureTokenStatusEA.sh](https://github.com/Yohan460/Automatic-Secure-Token-Granting-Workflow/blob/master/SecureTokenStatusEA.sh)
 
 ## Step 3 (Optional) - DEP Enrollment with no account creation SecureToken management
 

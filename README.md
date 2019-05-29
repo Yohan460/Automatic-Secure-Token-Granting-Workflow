@@ -5,7 +5,7 @@ This workflows allows for the automatic granting of secure tokens to the Jamf Pr
 To have a user driven, automatic method of enabling the primary user on a machine with a SecureToken and have FileVault enabled with a method of enabling future accounts
 
 ## Reasoning
-With the Apple implementation of giving SecureTokens to accounts that do not have them, it requires the user to enter the credentials to the SecureToken enabled administrator account. This is obviously something that a system administrator would not want a user to know or do.
+With the Apple implementation of giving SecureTokens to accounts that do not have them, it requires the user to enter the credentials to the SecureToken enabled administrator account. This is obviously something that a system administrator would not want a user to know or do. Therefore we need a way of placing the SecureToken enviornment into a known state with the 
 
 ## Step 1 - Disabling the Apple SecureToken Prompt
 
@@ -33,3 +33,9 @@ Maintenance:
 	
 ## Step 5 - Reporting on the Assigned User SecureToken Status
 This ensures the assigned user has a token.  That being said we can’t scope on a policy already having run and can’t do any funky regex on the Jamf pro side to check if the assigned user has a token. Therefore we need an EA. This can be done using the script below titled `assignedUserFV2EnabledEA.sh`. This uses an API call with Jamf to check if the assigned user has a secure token. Can’t use script parameters to get the API username and password unfortunately because it is an EA. Once that EA reports `True` you are in the clear to scope out your FV2 enablement policy of your own choice.
+
+# Remaining Thoughts
+
+### Changing the admin password
+
+### Login trigger firing issues

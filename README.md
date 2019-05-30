@@ -102,7 +102,7 @@ Well, that's just how the return code for `grep -v` works. ¯\_(ツ)_/¯
 
 #### We randomize the management account password and therefore don't know it
 Well for this to work you are going to need to have the managment account password in a known state and have the cleartext password. Therefore you are going to need to preceed and follow [line 41](https://github.com/Yohan460/Automatic-Secure-Token-Granting-Workflow/blob/master/enableHiddenAdminForFV2.sh#L41) with Jamf policy calls that set the password to a known state and then sets it back to a random state afterwards. Should look something like this:
-```
+```shell
 ... bleh bleh ...
 # Setting the managment account to a known password
 jamf policy -trigger setManagmentAccountToKnownPassword

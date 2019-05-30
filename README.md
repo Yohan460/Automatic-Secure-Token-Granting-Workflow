@@ -5,7 +5,7 @@ This workflows allows for the automatic granting of secure tokens to the Jamf Pr
 To have a user driven, automatic method of enabling the primary user on a machine with a SecureToken and have FileVault enabled with a method of enabling future accounts
 
 ## Reasoning
-With the Apple implementation of giving SecureTokens to accounts that do not have them, it requires the user to enter the credentials to the SecureToken enabled administrator account. This is obviously something that a system administrator would not want a user to know or do. Therefore we need a way of placing the SecureToken environment into a known state with known credentials to automatically trigger a method for assigning the user a SecureToken. Then reporting on that success.
+With the Apple implementation of giving SecureTokens to accounts that do not have them, it requires the user to enter the credentials to the SecureToken enabled administrator account. This is obviously something that a system administrator would not want a user to know or do. Therefore we need a way of placing the SecureToken environment into a known state with known credentials be used in an automatically trigged method for assigning the user a SecureToken. Then reporting on that success.
 
 ## Step 1 - Disabling the Apple SecureToken Prompt
 

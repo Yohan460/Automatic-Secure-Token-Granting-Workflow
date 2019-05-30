@@ -112,6 +112,7 @@ sysadminctl -secureTokenOn $adminUser -password $adminPass -adminUser $managemen
 
 # Setting the mangement account back to a random password
 jamf policy -trigger randomizeManagementAccountPassword
+... bleh bleh ...
 ```
 These policy triggers would be tied to policies that utilize the [Managment account administration payload](https://docs.jamf.com/10.12.0/jamf-pro/administrator-guide/Administering_the_Management_Account.html) to do their respective tasks.
 

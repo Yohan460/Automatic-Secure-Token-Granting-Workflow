@@ -117,7 +117,7 @@ Similar to Step 4 there are going to be multiple steps in getting this thing con
 | and |  | Assigned User Has SecureToken | is | `False` |  |   |   |
 
 #### Script Setup
-* Name - `enableHiddenAdminForFV2.sh`
+* Name - `enableUserUsingAdminForFV2.sh`
 * Script - [`enableUserUsingAdminForFV2.sh`](https://github.com/Yohan460/Automatic-Secure-Token-Granting-Workflow/blob/master/enableUserUsingAdminForFV2.sh)
 * Options
 

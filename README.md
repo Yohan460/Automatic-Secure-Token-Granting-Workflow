@@ -242,6 +242,7 @@ This [method of encrypting those parameters](https://github.com/jamf/Encrypted-S
 ### I want more information on SecureTokens creation issues
 
 Check this out: https://travellingtechguy.eu/final-wrap-up-on-secure-tokens/
+
 Also there is Apple's documentation: https://help.apple.com/deployment/macos/?lang=en#/apd8faa99948
 
 ## License

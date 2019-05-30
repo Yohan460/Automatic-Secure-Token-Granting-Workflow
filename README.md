@@ -146,7 +146,7 @@ Similar to Step 4 there are going to be multiple steps in getting this thing con
 #### General Notes
 
 ##### What does the user prompt look like stock?
-![alt text](https://github.com/Yohan460/Automatic-Secure-Token-Granting-Workflow/blob/master/User%Prompt.png "Like this!")
+![alt text](https://github.com/Yohan460/Automatic-Secure-Token-Granting-Workflow/blob/master/User%20Prompt.png "Like this!")
 
 Note - the cancel button is variable which is elaborated upon in the next note, also you can edit the text to be whatever you want
 

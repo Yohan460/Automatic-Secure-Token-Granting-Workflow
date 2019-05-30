@@ -237,4 +237,4 @@ The FV2 authentication screen only respects the accounts that have a SecureToken
 
 ### I'm worried about passing passwords in plain text
 
-This [method of encrypting those parameters](https://github.com/jamf/Encrypted-Script-Parameters) is the best I am going to be able to do. If that does not work for you, then this workflow might not be for you
+This [method of encrypting those parameters](https://github.com/jamf/Encrypted-Script-Parameters) is the best I am going to be able to do. If that does not work for you, then this workflow might not be for you.

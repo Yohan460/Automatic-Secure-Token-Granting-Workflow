@@ -5,7 +5,7 @@ This workflows allows for the automatic granting of secure tokens to the Jamf Pr
 To have a user driven, automatic method of enabling the primary user on a machine with a SecureToken and have FileVault enabled with a method of enabling future accounts
 
 ## Reasoning
-With the Apple implementation of giving SecureTokens to accounts that do not have them, it requires the user to enter the credentials to the SecureToken enabled administrator account. This is obviously something that a system administrator would not want a user to know or do. Therefore we need a way of placing the SecureToken enviornment into a known state with the 
+With the Apple implementation of giving SecureTokens to accounts that do not have them, it requires the user to enter the credentials to the SecureToken enabled administrator account. This is obviously something that a system administrator would not want a user to know or do. Therefore we need a way of placing the SecureToken environment into a known state with the 
 
 ## Step 1 - Disabling the Apple SecureToken Prompt
 
@@ -26,7 +26,7 @@ To setup some smart group scopings for Step 3 and 4 we must start retrieving the
 * Script - [`SecureTokenStatusEA.sh`](https://github.com/Yohan460/Automatic-Secure-Token-Granting-Workflow/blob/master/SecureTokenStatusEA.sh)
 
 ## Step 3 - Reporting on the Assigned User SecureToken Status
-Due to the limitation of not being able to do any funky regex on the Jamf pro side to check if the assigned user has a token. Therefore we need an EA. This EA uses an API call with Jamf to get the assigned user username, then checks that against the SecureToken enabled users on the machine. We can’t use script parameters to get the API username and password unfortunately because it is an EA. The contents of the EA are below
+Due to the limitation of not being able to do any funky regex on the Jamf pro side to check if the assigned user has a token. Therefore we need an EA. This EA uses an API call with Jamf to get the assigned user username, then checks that against the SecureToken enabled users on the machine. We can't use script parameters to get the API username and password unfortunately because it is an EA. The contents of the EA are below
 
 * Name - `Assigned User has SecureToken	`
 * Data Type - `String`
@@ -39,11 +39,11 @@ Note: You will need to add your Jamf Pro Server API username and password to the
 
 ### DEP SecureToken management Reasoning
 1. When the user account creation is skipped during a pre-stage enrollment there are situations where the management account can be granted the first SecureToken. Once this secure token is granted it must be used to grant other tokens. 
-2. There are other situations after a DEP enrollment or large major OS upgrade that can leave the machine with no SecureTokens. Therefore making grabbing theb first one for a known administrator account even more important
-3. The FV2 authentiation sceen presents all users that have a SecureToken no matter if they are hidden or not, therefore it is extremely important to try and minimize the number accounts presented to the user at this screen to avoid confusion.
+2. There are other situations after a DEP enrollment or large major OS upgrade that can leave the machine with no SecureTokens. Therefore making grabbing thebe first one for a known administrator account even more important
+3. The FV2 authentication screen presents all users that have a SecureToken no matter if they are hidden or not, therefore it is extremely important to try and minimize the number accounts presented to the user at this screen to avoid confusion.
 
 ### Implementation
-This implementation will take three stages. First, setting up the smart group for the policy. Second, adding the script to JAMF and explaining the script agruments. Third, the actual policy to run our script. Everything followed by some general comments about the script and explanations on why things are done the way they are.
+This implementation will take three stages. First, setting up the smart group for the policy. Second, adding the script to JAMF and explaining the script arguments. Third, the actual policy to run our script. Everything followed by some general comments about the script and explanations on why things are done the way they are.
 
 #### Smart Group Scoping Setup
 * Name - `Security - SecureToken - Machine Needs remediation`
@@ -96,7 +96,7 @@ fi
 ```
 There are documented cases I have found where the management account password I had defined can be used to grant a secure token to the admin account, but utilizing that same password to removing the token from the management account will not function. This leaves the only option of removing the account to be deleting the management account and recreating it. I will put the policy to update the management account in the remaining thoughts section of this readme.
 
-Also why is there not an `!` in front of the `sysadminctl` commmand in the if statement below?
+Also why is there not an `!` in front of the `sysadminctl` command in the if statement below?
 
 Well, that's just how the return code for `grep -v` works. ¯\_(ツ)_/¯
 
@@ -146,7 +146,7 @@ Similar to Step 4 there are going to be multiple steps in getting this thing con
 #### General Notes
 
 ##### What does the user prompt look like stock?
-![alt text](https://github.com/Yohan460/Automatic-Secure-Token-Granting-Workflow/blob/master/User%20Prompt.png "Like this!")
+![alt text](https://github.com/Yohan460/Automatic-Secure-Token-Granting-Workflow/blob/master/User%Prompt.png "Like this!")
 
 Note - the cancel button is variable which is elaborated upon in the next note, also you can edit the text to be whatever you want
 
@@ -188,7 +188,7 @@ Note - The smart group criteria is VERY flexible and probably needs more client 
 	
 #### General Notes
 
-This policy and what it actually is both scoped to and what it really does is extremely enviornment dependent. I can only partially advise what I am intenteding in my own enviornment. Your milege as always will vary.
+This policy and what it actually is both scoped to and what it really does is extremely environment dependent. I can only advise what I am intending for my own environment. Your mileage always will vary.
 
 # Remaining Thoughts
 
@@ -226,8 +226,7 @@ Have not had to deal with this personally yet, but to accomplish this it would b
 
 ### Login trigger firing issues
 
-I have noticed some issues where the second login trigger will fail to launch in a timly manner after the second login due to Jamf's `-randomDelay` parameter being called by another login trigger. Therefore the creation of a script that is called by [outset](https://github.com/chilcote/outset) under the `login-every-priviledged` config that calls the `login` Jamf policy trigger and nuking any process waiting with a `-randomDelay` would be the way to remediate this. I might write this script if I notice this issue more prevelant in my own enviornment
+I have noticed some issues where the second login trigger will fail to launch in a timely manner after the second login due to Jamf's `-randomDelay` parameter being called by another login trigger. Therefore the creation of a script that is called by [outset](https://github.com/chilcote/outset) under the `login-every-privileged` config that calls the `login` Jamf policy trigger and nuking any process waiting with a `-randomDelay` would be the way to remediate this. I might write this script if I notice this issue more prevalent in my own environment
 
 ### Do I work for Contoso Corp?
 No, It's a filler name. Put your own company names here
-

@@ -58,7 +58,7 @@ This implementation will take three stages. First, setting up the smart group fo
 
 #### Script Setup
 * Name - `enableHiddenAdminForFV2.sh`
-* Script - [`enableUserUsingAdminForFV2.sh`](https://github.com/Yohan460/Automatic-Secure-Token-Granting-Workflow/blob/master/enableUserUsingAdminForFV2.sh)
+* Script - [`enableHiddenAdminForFV2.sh`](https://github.com/Yohan460/Automatic-Secure-Token-Granting-Workflow/blob/master/enableHiddenAdminForFV2.sh)
 * Options
 
     4. Admin Username
@@ -99,20 +99,52 @@ Also why is there not an `!` in front of the `sysadminctl` commmand in the if st
 Well, that's just how the return code for `grep -v` works. ¯\_(ツ)_/¯
 
 ## Step 5 - Giving the user a SecureToken
-Step 2 is enabling you user to get a token at login. This can be done utilizing the script titled `enableUserUsingAdminForFV2.sh`, It takes in your admin username and password as Jamf script parameters and uses those to enable the account with a token. That being said we don’t want just any user to get a token, we want the assigned user to have a token. Therefore in the policy we set the following things:
-```
-General:
-	Trigger: Login 
-	Frequency: Ongoing
-	Client Side Restriction: Limit to Jamf Pro-assigned user
 
-Maintenance:
-	Update Inventory: Enabled
-```
+### Implementation
+Similar to Step 4 there are going to be multiple steps in getting this thing configured as well
+
+#### Smart Group Scoping Setup
+* Name - `Security - SecureToken - Ready for user token assignment`
+* Criteria
+
+| And/Or | ( | Criteria | Operator | Value | ) |
+|--------|---|-------------------------------|----------------------|----------------------|---|
+|  |  | Computer Group | member of | Group containing the computer you would like to target for the endgame |  |
+| and |  | SecureToken Status | matches regex | `[.]*NAME_OF_ADMIN_ACCOUNT[.]*` |  |
+| and |  | Computer Group | member of | Group containing all MacOS 10.14+ Machines |  |
+| and |  | Assigned User Has SecureToken | is | `False` |  |   |   |
+
+#### Script Setup
+* Name - `enableHiddenAdminForFV2.sh`
+* Script - [`enableUserUsingAdminForFV2.sh`](https://github.com/Yohan460/Automatic-Secure-Token-Granting-Workflow/blob/master/enableUserUsingAdminForFV2.sh)
+* Options
+
+    4. Admin Username
+    5. Admin Password
+
+#### Policy Setup
+
+* General
+	* Name - `Configuration - Enable User account with a Secure Token`
+	* Enabled - `True`
+	* Triggers
+		* Login
+	* Frequency - `Ongoing`
+* Scripts
+	* Script - `enableUserUsingAdminForFV2.sh`
+	* Priority - `Before`
+	* Parameters - Please will all the defined parameters in
+* Maintenance
+	* Update Inventory - Enabled
+
+#### General Notes
 ## Step 6 - Enabling FileVault
 
 # Remaining Thoughts
 
+### Nuking and Re-Creating the management account
+
 ### Changing the admin password
 
 ### Login trigger firing issues
+

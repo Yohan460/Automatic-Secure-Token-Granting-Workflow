@@ -239,6 +239,10 @@ The FV2 authentication screen only respects the accounts that have a SecureToken
 
 This [method of encrypting those parameters](https://github.com/jamf/Encrypted-Script-Parameters) is the best I am going to be able to do. If that does not work for you, then this workflow might not be for you.
 
+### I want more information on SecureTokens creation issues
+
+Check this out: https://travellingtechguy.eu/final-wrap-up-on-secure-tokens/
+
 ## License
 
 [WTFPL](http://www.wtfpl.net/)

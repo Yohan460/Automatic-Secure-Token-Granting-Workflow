@@ -5,7 +5,7 @@ This workflows allows for the automatic granting of secure tokens to the Jamf Pr
 To have a user driven, automatic method of enabling the primary user on a machine with a SecureToken and have FileVault enabled with a method of enabling future accounts
 
 ## Reasoning
-With the Apple implementation of giving SecureTokens to accounts that do not have them, it requires the user to enter the credentials to the SecureToken enabled administrator account. This is obviously something that a system administrator would not want a user to know or do. Therefore we need a way of placing the SecureToken environment into a known state with the 
+With the Apple implementation of giving SecureTokens to accounts that do not have them, it requires the user to enter the credentials to the SecureToken enabled administrator account. This is obviously something that a system administrator would not want a user to know or do. Therefore we need a way of placing the SecureToken environment into a known state with known credentials to automatically trigger a method for assigning the user a SecureToken. Then reporting on that success.
 
 ## Step 1 - Disabling the Apple SecureToken Prompt
 
@@ -230,3 +230,7 @@ I have noticed some issues where the second login trigger will fail to launch in
 
 ### Do I work for Contoso Corp?
 No, It's a filler name. Put your own company names here
+
+### Why do I NOT want to use this in a Lab situation
+
+The FV2 authentication screen only respects the accounts that have a SecureToken enabled on them on that local machine. In Lab situations whether you are binding you machines to LDAP/AD or using something like NoLo/Jamf Connect the FV2 authentication screen happnens before those products even start. Therefore upon a reboot/cold boot a brand new user to that machine will have no m

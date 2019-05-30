@@ -94,7 +94,7 @@ if [[ $(sysadminctl -secureTokenOff $managementUser -password $managementPass -a
 	jamf policy -event recreateManagementAccount
 fi
 ```
-There are documented cases I have found where the management account password I had defined can be used to grant a secure token to the admin account, but utilizing that same password to removing the token from the management account will not function. This leaves the only option of removing the account to be deleting the management account and recreating it. I will put the policy to update the management account in the remaining thoughts section of this readme.
+There are documented cases I have found where the management account password I had defined can be used to grant a secure token to the admin account, but utilizing that same password to removing the token from the management account will not function. This leaves the only option of removing the SecureToken to be deleting the management account and recreating it. I will put the policy to update the management account in the remaining thoughts section of this readme.
 
 Also why is there not an `!` in front of the `sysadminctl` command in the if statement below?
 

@@ -46,7 +46,7 @@ Note: You will need to add your Jamf Pro Server API username and password to the
 This implementation will take three stages. First, setting up the smart group for the policy. Second, adding the script to JAMF and explaining the script agruments. Third, the actual policy to run our script. Everything followed by some general comments about the script and explanations on why things are done the way they are.
 
 #### Smart Group Scoping Setup
-* Name - `Security - SecureToken - PRI Needs remediation`
+* Name - `Security - SecureToken - Machine Needs remediation`
 * Criteria
 
 | And/Or | ( | Criteria | Operator | Value | ) |
@@ -80,6 +80,8 @@ This implementation will take three stages. First, setting up the smart group fo
 	* Parameters - Please will all the defined parameters in
 * Maintenance
 	* Update Inventory - Enabled
+* Scope
+	* Computer Group - `Security - SecureToken - Machine Needs remediation`
 
 #### General Notes
 
@@ -130,15 +132,63 @@ Similar to Step 4 there are going to be multiple steps in getting this thing con
 	* Triggers
 		* Login
 	* Frequency - `Ongoing`
+	* Client Side Restrictions
+		* Limit to Jamf Pro-assigned user - `Enabled`
 * Scripts
 	* Script - `enableUserUsingAdminForFV2.sh`
 	* Priority - `Before`
 	* Parameters - Please will all the defined parameters in
 * Maintenance
 	* Update Inventory - Enabled
+* Scope
+	* Computer Group - `Security - SecureToken - Ready for user token assignment`
 
 #### General Notes
+
+##### What does the user prompt look like stock?
+![alt text](https://github.com/Yohan460/Automatic-Secure-Token-Granting-Workflow/blob/master/User%20Prompt.png "Like this!")
+
+Note - the cancel button is variable which is elaborated upon in the next note, also you can edit the text to be whatever you want
+
+##### What is up with the cancel button and the receipt
+
+In my organization I have a receipt directory in the `/Library/Contoso/Receipts`. Therefore first off, if this directory does not exist then the touch command will fail and you are gonna start getting failures in your Jamf Pro Server reports on the execution of this policy. Also the one time option to cancel will not be a thing. The user will have the ability to cancel as many times as they want. This is not something we wanted, hence I added in the receipt. One Cancel, that's all you get. You can tailor this to do what you want.
+
 ## Step 6 - Enabling FileVault
+
+### Implementation
+This last one is thankfully a little easier! Now that we have our user with a SecureToken we can look at enabling FileVault 2. The general setup for this is below. Feel free to customize it using your own secret sauce.
+
+#### Smart Group Scoping Setup
+* Name - `Security - SecureToken - Assigned User has Token`
+* Criteria
+
+| And/Or | ( | Criteria | Operator | Value | ) |
+|--------|---|-------------------------------|----------------------|----------------------|---|
+|   |   | Assigned User Has SecureToken | is | `True` |  |   |   |
+
+Note - The smart group criteria is VERY flexible and probably needs more client disk state validation as defined in [Jamf FV2 Technical documentation](https://docs.jamf.com/technical-papers/jamf-pro/administering-filevault-macos/10.7.1/Creating_Smart_Computer_Groups_for_FileVault.html#src-19532040_id-.CreatingSmartComputerGroupsforFileVault1v2018-CreatingaSmartGroupforFileVaultEligibleComputersthatareNotYetEncrypted)
+
+#### Policy Setup
+
+* General
+	* Name - Configuration - Enable FileVault 2 Configuration on Next login`
+	* Enabled - `True`
+	* Triggers
+		* Recurring Check-in
+	* Frequency - `Once per Computer`
+* Disk Encryption
+	* Action - `Apple Disk Encryption Configuration`
+	* Disk Encryption Configuration - Contoso Disk Encryption Configuration (You'll need to make this under the [Disk Encryption Settings](https://docs.jamf.com/10.12.0/jamf-pro/administrator-guide/Managing_Disk_Encryption_Configurations.html))
+	* Require FileVault 2 - `At Next Login` (my personal preference)
+* Scope
+	* Computer Group - `Security - SecureToken - Assigned User has Token`
+* User Interaction
+	* Complete Message - `FileVault 2 has been enabled. Please restart to begin`
+	
+#### General Notes
+
+This policy and what it actually is both scoped to and what it really does is extremely enviornment dependent. I can only partially advise what I am intenteding in my own enviornment. Your milege as always will vary.
 
 # Remaining Thoughts
 
@@ -147,4 +197,7 @@ Similar to Step 4 there are going to be multiple steps in getting this thing con
 ### Changing the admin password
 
 ### Login trigger firing issues
+
+### Do I work for Contoso Corp?
+No, It's a filler name. Put your own company names here
 

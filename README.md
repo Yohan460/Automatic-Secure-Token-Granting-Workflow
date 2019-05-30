@@ -174,7 +174,7 @@ In my organization I have a receipt directory in the `/Library/Contoso/Receipts`
 ## Step 6 - Enabling FileVault
 
 ### Implementation
-This last one is thankfully a little easier! Now that we have our user with a SecureToken we can look at enabling FileVault 2. The general setup for this is below. Feel free to customize it using your own secret sauce.
+This last one is thankfully a little easier! Now that we have our user with a SecureToken we can look at enabling FileVault 2. The general setup for this is below. Feel free to customize it using your own secret sauce. Not mentioned below is that you will also want to include a FileVault 2 Key Escrow configuration profile to instruct the machine to pass the FileVault 2 recovery key to your Jamf Pro Server.
 
 #### Smart Group Scoping Setup
 * Name - `Security - SecureToken - Assigned User has Token`

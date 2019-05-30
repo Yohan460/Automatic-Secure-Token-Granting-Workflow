@@ -172,7 +172,7 @@ Note - The smart group criteria is VERY flexible and probably needs more client 
 #### Policy Setup
 
 * General
-	* Name - Configuration - Enable FileVault 2 Configuration on Next login`
+	* Name - `Configuration - Enable FileVault 2 Configuration on Next login`
 	* Enabled - `True`
 	* Triggers
 		* Recurring Check-in
@@ -194,9 +194,39 @@ This policy and what it actually is both scoped to and what it really does is ex
 
 ### Nuking and Re-Creating the management account
 
+The policy I have is as follows, please use this as a template.
+
+* General
+	* Name - `Utility - Remove and re-create management account`
+	* Enabled - `True`
+	* Triggers
+		* Custom
+			* `recreateManagementAccount`
+	* Frequency - `Ongoing`
+* Scripts 
+	* Script - `DeleteManagmentAccount.sh`
+		* Script contents are as follows
+		```
+		#!/bin/bash
+		sysadminctl -deleteUser MANAGEMENT_ACCOUNT_USERNAME -secure
+		```
+	* Priority - `Before`
+* Local Accounts
+	* Create New Account - `Selected`
+	* Username - You management account username
+	* Password & Verify Password - You management account password
+	* Home Directory Location - `/private/var/MANAGEMENT_ACCOUNT_USERNAME`
+	* Allows the user to administer computer - `Enabled`
+* Scope
+	* All Computers
+
 ### Changing the admin password
 
+Have not had to deal with this personally yet, but to accomplish this it would be a combination of both using the `passwd` binary to change the password on the MacOS side, but then also a `diskutil apfs changePassphrase BOOTDISK -user UUID` to get the FileVault side changed as well. Also you will need to update all your script parameters
+
 ### Login trigger firing issues
+
+I have noticed some issues where the second login trigger will fail to launch in a timly manner after the second login due to Jamf's `-randomDelay` parameter being called by another login trigger. Therefore the creation of a script that is called by [outset](https://github.com/chilcote/outset) under the `login-every-priviledged` config that calls the `login` Jamf policy trigger and nuking any process waiting with a `-randomDelay` would be the way to remediate this. I might write this script if I notice this issue more prevelant in my own enviornment
 
 ### Do I work for Contoso Corp?
 No, It's a filler name. Put your own company names here

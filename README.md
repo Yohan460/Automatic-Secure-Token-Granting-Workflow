@@ -262,6 +262,10 @@ Check this out: https://travellingtechguy.eu/final-wrap-up-on-secure-tokens/
 
 Also there is Apple's documentation: https://help.apple.com/deployment/macos/?lang=en#/apd8faa99948
 
+### WTF is all this about MacOS Catalina and fdesetup
+
+So basically the Jamf implementation of enabling filevault using a policy with a disk encryption configuration appears to be defunct in the early versions of the MacOS Catalina betas. This causes Filevault to not enable silently along with other issues. I recommend you investigate and test your filevault enablement with the new MacOS versions. Currently (10.15b2) this script and workflow behaves as is intended. 
+
 ## License
 
 [WTFPL](http://www.wtfpl.net/)

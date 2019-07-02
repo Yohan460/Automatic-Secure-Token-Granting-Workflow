@@ -56,6 +56,8 @@ done
 # Checking for any other errors and changing the return code if there are any
 if [[ $sysadminctlOutput != *"Done"* ]]; then
     returnCode=1
+else
+    touch /Library/Contoso/Receipts/.AssignedUserGivenToken
 fi
 
 # Exiting and returning the policy call code

@@ -45,8 +45,8 @@ return dialogText
 EOF
     fi
    
-    USER_ID=$(/usr/bin/id -u “$addUser”)
-    addUserPass=$(/bin/launchctl asuser “$USER_ID” osascript -e "$applescriptCode" || touch /Library/Contoso/Receipts/.SecureTokenPromptCancelled && exit 0)
+    USER_ID=$(dscl . -read /Users/$addUser UniqueID | awk '{print $2}')  
+    addUserPass="$(/bin/launchctl asuser $USER_ID osascript -e "$applescriptCode" || touch /Library/Contoso/Receipts/.SecureTokenPromptCancelled && exit 0)"
 
     # Enabling the secure token for the admin account
     sysadminctlOutput=$(sysadminctl -secureTokenOn $addUser -password $addUserPass -adminUser $adminUser -adminPassword $adminPass 2>&1)

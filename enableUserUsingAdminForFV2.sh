@@ -44,8 +44,9 @@ Please enter your password to enable your account for FileVault encryption:" def
 return dialogText
 EOF
     fi
-
-    addUserPass=$(osascript -e "$applescriptCode" || touch /Library/Contoso/Receipts/.SecureTokenPromptCancelled && exit 0)
+   
+    USER_ID=$(/usr/bin/id -u “$addUser”)
+    addUserPass=$(/bin/launchctl asuser “$USER_ID” osascript -e "$applescriptCode" || touch /Library/Contoso/Receipts/.SecureTokenPromptCancelled && exit 0)
 
     # Enabling the secure token for the admin account
     sysadminctlOutput=$(sysadminctl -secureTokenOn $addUser -password $addUserPass -adminUser $adminUser -adminPassword $adminPass 2>&1)
